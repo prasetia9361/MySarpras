@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Laporan extends CI_Controller
 {
     public function __construct()
@@ -11,20 +15,10 @@ class Laporan extends CI_Controller
     }
     public function index()
     {
-        $data['title'] = 'Rekap Laporan';
-
-        $data['title'] = 'Rekap Laporan';
-
         $mulai = $this->input->get('mulai_tanggal');
         $sampai = $this->input->get('sampai_tanggal');
-    
-        if (!empty($mulai) && !empty($sampai)) {
-            $this->db->where('tanggal >=', $mulai);
-            $this->db->where('tanggal <=', $sampai);
-        }
-
-        $data['rekap'] = $this->Laporanmodel->get_laporan('tb_laporan')->result();
-    
+        $data['title'] = 'Rekap Laporan';
+        $data['rekap'] = $this->Laporanmodel->get_laporan($mulai, $sampai);
         $data['mulai'] = $mulai;
         $data['sampai'] = $sampai;
 
@@ -32,6 +26,30 @@ class Laporan extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('laporan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function cetak_pdf() {
+        require_once FCPATH . 'vendor/autoload.php';
+
+        $mulai = $this->input->get('mulai_tanggal');
+        $sampai = $this->input->get('sampai_tanggal');
+
+        $data['rekap'] = $this->Laporanmodel->get_laporan($mulai, $sampai);
+        $data['mulai'] = $mulai;
+        $data['sampai'] = $sampai;
+        $data['pdf_mode'] = true;
+
+        // View khusus tanpa header/footer
+        $html = $this->load->view('laporan_pdf', $data, true);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("laporan.pdf", array("Attachment" => false));
     }
     
 }
