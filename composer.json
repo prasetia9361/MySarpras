@@ -1,0 +1,17 @@
+{
+    "name": "acer/my-sarpras",
+    "autoload": {
+        "psr-4": {
+            "Acer\\MySarpras\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "prasetia9361",
+            "email": "prasetia1805@gmail.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.1"
+    }
+}
