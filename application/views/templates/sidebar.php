@@ -82,6 +82,12 @@
               <p>Daftar Sarpras</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url('pengajuan')?>" class="nav-link">
+              <i class="fas fa-shopping-cart"></i>
+              <p>Pengajuan Sarpras</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

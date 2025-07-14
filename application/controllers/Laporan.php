@@ -10,7 +10,7 @@ class Laporan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Laporanmodel');
+        $this->load->model('Accmodel');
         // $this->load->library('form_validation');
     }
     public function index()
@@ -18,7 +18,7 @@ class Laporan extends CI_Controller
         $mulai = $this->input->get('mulai_tanggal');
         $sampai = $this->input->get('sampai_tanggal');
         $data['title'] = 'Rekap Laporan';
-        $data['rekap'] = $this->Laporanmodel->get_laporan($mulai, $sampai);
+        $data['rekap'] = $this->Accmodel->get_laporan($mulai, $sampai)->result();
         $data['mulai'] = $mulai;
         $data['sampai'] = $sampai;
 
@@ -34,7 +34,7 @@ class Laporan extends CI_Controller
         $mulai = $this->input->get('mulai_tanggal');
         $sampai = $this->input->get('sampai_tanggal');
 
-        $data['rekap'] = $this->Laporanmodel->get_laporan($mulai, $sampai);
+        $data['rekap'] = $this->Accmodel->get_laporan($mulai, $sampai)->result();
         $data['mulai'] = $mulai;
         $data['sampai'] = $sampai;
         $data['pdf_mode'] = true;

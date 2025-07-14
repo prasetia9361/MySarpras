@@ -69,40 +69,53 @@
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No.</th>
                                     <th>Nama</th>
                                     <th>ID Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Tanggal</th>
+                                    <th>Jenis Pengajuan</th>
                                     <th>Keterangan</th>
-                                    <th>Perizinan</th>
+                                    <th>Setatus</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php if ($rekap): $no = 1; foreach ($rekap as $rkp): ?>
-                                    <tr>
+                            <?php if ($rekap): 
+                                    $no = 1; 
+                                    foreach ($rekap as $rkp): 
+                                            if ($rkp->aksi == 0) {
+                                                $setatus = "ditolak";
+                                            }elseif ($rkp->aksi == 1) {
+                                                $setatus = "disetujui";
+                                            } 
+                            ?>
+                                    <tr class="text-center">
                                         <td><?= $no++ ?></td>
                                         <td><?= $rkp->nama ?></td>
                                         <td><?= $rkp->id_barang ?></td>
                                         <td><?= $rkp->nama_barang ?></td>
                                         <td><?= $rkp->tanggal ?></td>
+                                        <td>
+                                            <?= $rkp->jenis_pengajuan == 0 ? "Peminjaman" : "Pengembalian"; ?>
+                                        </td>
                                         <td><?= $rkp->keterangan ?></td>
-                                        <td><?= $rkp->aksi ?></td>
+                                        <td><?= $setatus ?></td>
                                     </tr>
                                 <?php endforeach; else: ?>
                                     <tr><td colspan="4">Tidak ada data</td></tr>
                                 <?php endif; ?>
                             </tbody>
                             <tfoot>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No.</th>
                                     <th>Nama</th>
                                     <th>ID Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Tanggal</th>
+                                    <th>Jenis Pengajuan</th>
                                     <th>Keterangan</th>
-                                    <th>Perizinan</th>
+                                    <th>Setatus</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -114,3 +127,4 @@
     </div>
 </section>
 <!-- /.content -->
+ 

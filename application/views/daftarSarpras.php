@@ -4,9 +4,6 @@
     <div class="row">
         <div class="col-12">
         <div class="card">
-            <div class="card-header">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah">Ajukan Permohonan</button>
-            </div>
             <!-- /.card-header -->
             <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">

@@ -7,86 +7,85 @@
             <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
-                <tr>
+                <tr class="text-center">
                 <th>No.</th>
                 <th>Nama</th>
                 <th>ID Barang</th>
                 <th>Nama Barang</th>
                 <th>Tanggal</th>
+                <th>Jenis Pengajuan</th>
                 <th>Keterangan</th>
+                <th>Status</th>
                 <th>aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>BRG001</td>
-                <td>Barang A</td>
-                <td>2023-01-01</td>
-                <td>Kegiatan Inception</td>
-                <td>
-                    <button class="btn btn-info btn-sm">Diizinkan</button>
-                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                </td>
+                <?php if ($acc): $no = 1; 
+                        foreach ($acc as $raw): 
+                            if ($raw->aksi == 0) {
+                                $status = "ditolak";
+                            }elseif ($raw->aksi == 1) {
+                                $status = "disetujui";
+                            } else {
+                                $status = "pengajuan";
+                            }
+                ?>
+                <tr class="text-center">
+                    <td><?= $no++ ?></td>
+                    <td><?= $raw->nama ?></td>
+                    <td><?= $raw->id_barang ?></td>
+                    <td><?= $raw->nama_barang ?></td>
+                    <td><?= $raw->tanggal ?></td>
+                    <td>
+                        <?= $raw->jenis_pengajuan == 0 ? "Peminjaman" : "Pengembalian"; ?>
+                    </td>
+                    <td><?= $raw->keterangan ?></td>
+                    <td><?= $status ?></td>
+                    <td>
+                        <button 
+                            class="btn btn-info btn-sm aksi-modal-btn" 
+                            data-toggle="modal" 
+                            data-target="#aksiModal"
+                            data-id="<?= $raw->id ?>"
+                            data-nama="<?= $raw->nama ?>"
+                            data-id_barang="<?= $raw->id_barang ?>"
+                            data-action="setujui"
+                            data-aksi="disetujui"
+                            >Disetujui</button>
+                        <button 
+                            class="btn btn-danger btn-sm aksi-modal-btn" 
+                            data-toggle="modal" 
+                            data-target="#aksiModal"
+                            data-id="<?= $raw->id ?>"
+                            data-nama="<?= $raw->nama ?>"
+                            data-id_barang="<?= $raw->id_barang ?>"
+                            data-action="tolak"
+                            data-aksi="Ditolak"
+                            >Ditolak</button>
+                        <button 
+                            class="btn btn-danger btn-sm aksi-modal-btn" 
+                            data-toggle="modal" 
+                            data-target="#aksiModal"
+                            data-id="<?= $raw->id ?>"
+                            data-action="hapus"
+                            data-aksi="Hapus"
+                            >Hapus</button>
+                    </td>
                 </tr>
-                <tr>
-                <td>2</td>
-                <td>Jane Smith</td>
-                <td>BRG002</td>
-                <td>Barang B</td>
-                <td>2023-01-02</td>
-                <td>Kegiatan Planning</td>
-                <td>
-                    <button class="btn btn-info btn-sm">Diizinkan</button>
-                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                </td>
-                </tr>
-                <tr>
-                <td>3</td>
-                <td>Michael Johnson</td>
-                <td>BRG003</td>
-                <td>Barang C</td>
-                <td>2023-01-03</td>
-                <td>Kegiatan Execution</td>
-                <td>
-                    <button class="btn btn-info btn-sm">Diizinkan</button>
-                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                </td>
-                </tr>
-                <tr>
-                <td>4</td>
-                <td>Emily Davis</td>
-                <td>BRG004</td>
-                <td>Barang D</td>
-                <td>2023-01-04</td>
-                <td>Kegiatan Closure</td>
-                <td>
-                    <button class="btn btn-info btn-sm">Diizinkan</button>
-                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                </td>
-                </tr>
-                <tr>
-                <td>5</td>
-                <td>David Wilson</td>
-                <td>BRG005</td>
-                <td>Barang E</td>
-                <td>2023-01-05</td>
-                <td>Kegiatan Monitoring</td>
-                <td>
-                    <button class="btn btn-info btn-sm">Diizinkan</button>
-                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                </td>
-                </tr>
+                <?php endforeach; else: ?>
+                    <tr><td colspan="4">Tidak ada data</td></tr>
+                <?php endif; ?>
                 </tbody>
                 <tfoot>
-                <tr>
+                <tr class="text-center">
                 <th>No.</th>
                 <th>Nama</th>
                 <th>ID Barang</th>
                 <th>Nama Barang</th>
                 <th>Tanggal</th>
+                <th>Jenis Pengajuan</th>
                 <th>Keterangan</th>
+                <th>Status</th>
                 <th>aksi</th>
                 </tr>
                 </tfoot>
@@ -103,3 +102,59 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<!-- Modal Aksi -->
+<div class="modal fade" id="aksiModal" tabindex="-1" aria-labelledby="aksiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aksiModalLabel">Konfirmasi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="aksiModalBody">
+        <!-- Isi konfirmasi akan diisi via JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <a href="#" class="btn btn-primary" id="aksiModalYesBtn">Ya, Lanjutkan</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var aksiModal = document.getElementById('aksiModal');
+    var aksiModalBody = document.getElementById('aksiModalBody');
+    var aksiModalYesBtn = document.getElementById('aksiModalYesBtn');
+
+    $('#aksiModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button yang diklik
+        var id = button.data('id');
+        var nama = button.data('nama');
+        var id_barang = button.data('id_barang');
+        var action = button.data('action');
+        var aksi = button.data('aksi');
+
+        // Default pesan
+        var pesan = "Apakah Anda yakin ingin melakukan aksi ini?";
+        var url = "#";
+
+        if(action === "setujui") {
+            pesan = "Setujui pengajuan atas nama <b>" + nama + "</b>?";
+            url = "<?= base_url('acc/setujui/') ?>" + id;
+        } else if(action === "tolak") {
+            pesan = "Tolak pengajuan atas nama <b>" + nama + "</b>?";
+            url = "<?= base_url('acc/tolak/') ?>" + id;
+        } else if(action === "hapus") {
+            pesan = "Hapus pengajuan ini?";
+            url = "<?= base_url('acc/hapus/') ?>" + id;
+        }
+
+        aksiModalBody.innerHTML = pesan;
+        aksiModalYesBtn.href = url;
+    });
+});
+</script>
