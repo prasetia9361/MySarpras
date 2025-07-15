@@ -7,11 +7,19 @@ class Sarprasmodel extends CI_Model
         return $this->db->get('tb_sarpras');
     }
 
-    public function get_id_barang()
+    public function get_nama_barang()
     {
-        $this->db->select('tb_sarpras.id_barang');
-        $this->db->from('tb_sarpras as s');
-        $this->db->where('s.aksi', 0);
+        $this->db->select('nama_barang');
+        $this->db->from('tb_sarpras');
+        $this->db->where('status', 0);
+        return $this->db->get();
+    }
+
+    public function get_id_barang($nama_barang)
+    {
+        $this->db->select('id_barang');
+        $this->db->from('tb_sarpras');
+        $this->db->where('nama_barang', $nama_barang);
         return $this->db->get();
     }
 
@@ -19,6 +27,11 @@ class Sarprasmodel extends CI_Model
         $this->db->insert('tb_sarpras', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
         redirect('sarpras');
+    }
+
+    public function update_status($id_barang, $status){
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('tb_sarpras', ['status' => $status]);
     }
 
 

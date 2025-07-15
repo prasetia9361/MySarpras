@@ -46,7 +46,7 @@
                             class="btn btn-info btn-sm aksi-modal-btn" 
                             data-toggle="modal" 
                             data-target="#aksiModal"
-                            data-id="<?= $raw->id ?>"
+                            data-id="<?= $raw->id_pengajuan ?>"
                             data-nama="<?= $raw->nama ?>"
                             data-id_barang="<?= $raw->id_barang ?>"
                             data-action="setujui"
@@ -56,7 +56,7 @@
                             class="btn btn-danger btn-sm aksi-modal-btn" 
                             data-toggle="modal" 
                             data-target="#aksiModal"
-                            data-id="<?= $raw->id ?>"
+                            data-id="<?= $raw->id_pengajuan ?>"
                             data-nama="<?= $raw->nama ?>"
                             data-id_barang="<?= $raw->id_barang ?>"
                             data-action="tolak"
@@ -66,7 +66,7 @@
                             class="btn btn-danger btn-sm aksi-modal-btn" 
                             data-toggle="modal" 
                             data-target="#aksiModal"
-                            data-id="<?= $raw->id ?>"
+                            data-id="<?= $raw->id_pengajuan ?>"
                             data-action="hapus"
                             data-aksi="Hapus"
                             >Hapus</button>
@@ -138,19 +138,22 @@ document.addEventListener('DOMContentLoaded', function() {
         var action = button.data('action');
         var aksi = button.data('aksi');
 
+        // Debug: tampilkan nilai id di console
+        console.log("DEBUG: Nilai kolom id yang diklik:", id);
+
         // Default pesan
         var pesan = "Apakah Anda yakin ingin melakukan aksi ini?";
         var url = "#";
 
         if(action === "setujui") {
             pesan = "Setujui pengajuan atas nama <b>" + nama + "</b>?";
-            url = "<?= base_url('acc/setujui/') ?>" + id;
+            url = "<?= base_url('acc/setujui/') ?>" + id + "/" + id_barang;
         } else if(action === "tolak") {
             pesan = "Tolak pengajuan atas nama <b>" + nama + "</b>?";
-            url = "<?= base_url('acc/tolak/') ?>" + id;
+            url = "<?= base_url('acc/tolak/') ?>" + id + "/" + id_barang;
         } else if(action === "hapus") {
             pesan = "Hapus pengajuan ini?";
-            url = "<?= base_url('acc/hapus/') ?>" + id;
+            url = "<?= base_url('acc/hapus/') ?>" + id + "/" + id_barang;
         }
 
         aksiModalBody.innerHTML = pesan;

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Accmodel extends CI_Model {
 
     public function get_pengajuan() {
-        $this->db->select('*');
+        $this->db->select('acc.*, acc.id as id_pengajuan, s.nama_barang, s.id_barang as id_barang_sarpras');
         $this->db->from('tb_pengajuan as acc');
         $this->db->join('tb_sarpras as s', 's.id_barang=acc.id_barang');
         return $this->db->get();

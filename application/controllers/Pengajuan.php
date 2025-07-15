@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
+// use Dompdf\Dompdf;
+// use Dompdf\Options;
 
 class Pengajuan extends CI_Controller
 {
@@ -27,7 +27,11 @@ class Pengajuan extends CI_Controller
 
     public function tambah()
     {
+        $this->load->model('Sarprasmodel');
+        $data['options_barang'] = $this->Sarprasmodel->get_nama_barang()->result();
+
         $data['title'] = 'Tambah Pengajuan';
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('pengajuan/tambah', $data);
@@ -43,22 +47,49 @@ class Pengajuan extends CI_Controller
         $this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 
+        $nama = $this->input->post('nama');
+        $nama_barang = $this->input->post('nama_barang');
+        $id_barang = $this->input->post('id_barang');
+        $tanggal = $this->input->post('tanggal');
+        $jenis_pengajuan = $this->input->post('jenis_pengajuan');
+        $keterangan = $this->input->post('keterangan');
+
         if ($this->form_validation->run() == false) {
-            $this->tambah();
+            // Jika validasi gagal, kembalikan response error
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Data tidak boleh kosong',
+                'errors' => $this->form_validation->error_array()
+            ]);
+            return;
         } else {
             $data = [
-                'nama' => $this->input->post('nama'),
-                'id_barang' => $this->input->post('id_barang'),
-                'nama_barang' => $this->input->post('nama_barang'),
-                'tanggal' => $this->input->post('tanggal'),
-                'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-                'keterangan' => $this->input->post('keterangan'),
+                'nama' => $nama,
+                'id_barang' => $id_barang,
+                'nama_barang' => $nama_barang,
+                'tanggal' => $tanggal,
+                'jenis_pengajuan' => $jenis_pengajuan,
+                'keterangan' => $keterangan,
                 'aksi' => 2,
             ];
 
             $this->Accmodel->insert_pengajuan($data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil disimpan</div>');
-            redirect('pengajuan/tambah');
+            // Kembalikan response success
+            echo 'success';
+            return;
         }
+    }
+
+    public function get_id_barang_by_nama()
+    {
+        $nama_barang = $this->input->post('nama_barang');
+        $this->load->model('Sarprasmodel');
+        $result = $this->Sarprasmodel->get_id_barang($nama_barang)->result();
+
+        $data = [];
+        foreach ($result as $row) {
+            $data[] = $row->id_barang;
+        }
+        echo json_encode($data);
     }
 }
