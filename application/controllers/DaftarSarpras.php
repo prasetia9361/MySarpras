@@ -16,7 +16,7 @@ class DaftarSarpras extends CI_Controller
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('daftarSarpras');
+        $this->load->view('daftarSarpras', $data);
         $this->load->view('templates/footer');
     }
     
