@@ -80,13 +80,13 @@ class DataSarpras extends CI_Controller
         }
     }
 
-    public function make_id(){
-        $jenis_barang = $this->input->post('jenis_barang');
-        if ($jenis_barang != '') {
-            $barang = $this->Sarprasmodel->buat_kode($jenis_barang);
-        }
+    // public function make_id(){
+    //     $jenis_barang = $this->input->post('jenis_barang');
+    //     if ($jenis_barang != '') {
+    //         $barang = $this->Sarprasmodel->buat_kode($jenis_barang);
+    //     }
         
-        echo json_encode($data);
-    }
+    //     echo json_encode($data);
+    // }
     
 }
