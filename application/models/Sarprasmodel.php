@@ -7,6 +7,13 @@ class Sarprasmodel extends CI_Model
         return $this->db->get('tb_sarpras');
     }
 
+    // Tambahkan fungsi untuk mendapatkan data sarpras berdasarkan $id
+    public function get_sarpras_by_id($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->get('tb_sarpras');
+    }
+
     public function buat_kode($jenis_barang){
         // Tentukan prefix dan panjang prefix
         if (strtolower($jenis_barang) == 'ruangan') {
@@ -34,6 +41,12 @@ class Sarprasmodel extends CI_Model
 
         $kodejadi = $prefix . $kodemax;
         return $kodejadi;
+    }
+
+    public function update_data($id, $data)
+    {
+        $this->db->where('id', $id); // pastikan kolom primary key benar, misal 'id' atau 'id_pengajuan'
+        $this->db->update('tb_sarpras', $data);
     }
 
     public function get_jenis_barang(){
@@ -67,6 +80,12 @@ class Sarprasmodel extends CI_Model
     public function update_status($id_barang, $status){
         $this->db->where('id_barang', $id_barang);
         $this->db->update('tb_sarpras', ['status' => $status]);
+    }
+
+    public function hapus_data($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('tb_sarpras');
     }
 
 

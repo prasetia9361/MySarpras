@@ -14,6 +14,7 @@
                 <thead>
                 <tr>
                 <th>No.</th>
+                <th>Username</th>
                 <th>Nama</th>
                 <th>Gender</th>
                 <th>No. HP</th>
@@ -28,7 +29,7 @@
                         foreach ($user as $us): 
                             if ($us->akses == 0) {
                                 $akses = "User";
-                            }elseif ($sar->akses == 1) {
+                            }elseif ($us->akses == 1) {
                                 $akses = "Admin";
                             }else {
                                 $akses = "Waka Sarpras";
@@ -38,13 +39,20 @@
                     <td><?= $no++ ?></td>
                     <td><?= $us->username ?></td>
                     <td><?= $us->nama ?></td>
-                    <td><?= $us->gender ?></td>
+                    <td>
+                        <?= $us->gender == 0 ? "laki-laki" : "perempuan"; ?>
+                    </td>
                     <td><?= $us->no_hp ?></td>
                     <td><?= $us->alamat ?></td>
                     <td><?= $akses?></td>
                     <td>
-                        <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                        <!-- <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a> -->
+                        <form action="<?= base_url('kelolaUser/form_edit') ?>" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= $us->id ?>">
+                            <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                        </form>
+                    <a href="<?= base_url('kelolaUser/hapus_data/' . $us->id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; else: ?>
@@ -54,6 +62,7 @@
                 <tfoot>
                 <tr>
                 <th>No.</th>
+                <th>Username</th>
                 <th>Nama</th>
                 <th>Gender</th>
                 <th>No. HP</th>

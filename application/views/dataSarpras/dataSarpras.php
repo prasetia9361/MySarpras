@@ -37,8 +37,11 @@
                     <td><?= $sar->jenis_barang ?></td>
                     <td><?= $status ?></td>
                 <td>
-                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <form action="<?= base_url('dataSarpras/form_edit') ?>" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="<?= $sar->id ?>">
+                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                    </form>
+                    <a href="<?= base_url('dataSarpras/hapus_data/' . $sar->id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                 </td>
                 </tr>
                 <?php endforeach; else: ?>
