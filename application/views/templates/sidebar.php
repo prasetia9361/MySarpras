@@ -78,13 +78,13 @@
           </li>
           <li class="nav-item">
             <a href="<?= base_url('daftarSarpras')?>" class="nav-link">
-              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-tags"></i>
               <p>Daftar Sarpras</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="<?= base_url('pengajuan')?>" class="nav-link">
-              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-cart-plus"></i>
               <p>Pengajuan Sarpras</p>
             </a>
           </li>
