@@ -7,6 +7,14 @@ class Usermodel extends CI_Model
         return $this->db->get('tb_user');
     }
 
+    public function get_by_username($username) {
+        return $this->db
+                    ->where('username', $username)
+                    ->limit(1)
+                    ->get('tb_user')
+                    ->row();
+    }
+
     public function get_user_by_id($id)
     {
         $this->db->where('id', $id);

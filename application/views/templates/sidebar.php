@@ -46,12 +46,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">MENU UTAMA</li>
+          <?php $akses = $this->session->userdata('akses'); ?>
           <li class="nav-item">
             <a href="<?= base_url('dashboard')?>" class="nav-link">
               <i class="fas fa-home"></i>
               <p>Dashboard</p>
             </a>
           </li>
+          <?php if ($akses === '1'): // ADMIN ?>
           <li class="nav-item">
             <a href="<?= base_url('dataSarpras')?>" class="nav-link">
               <i class="fas fa-scroll"></i>
@@ -70,12 +72,20 @@
               <p>Rekap Laporan</p>
             </a>
           </li>
+          <?php elseif ($akses === '2'): // WAKA SARPRAS ?>
           <li class="nav-item">
             <a href="<?= base_url('acc')?>" class="nav-link">
               <i class="fas fa-handshake"></i>
               <p>Persetujuan Peminjaman</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url('laporan')?>" class="nav-link">
+              <i class="fas fa-archive"></i>
+              <p>Rekap Laporan</p>
+            </a>
+          </li>
+          <?php elseif ($akses === '0'): // USER ?>
           <li class="nav-item">
             <a href="<?= base_url('daftarSarpras')?>" class="nav-link">
               <i class="fas fa-tags"></i>
@@ -86,6 +96,14 @@
             <a href="<?= base_url('pengajuan')?>" class="nav-link">
               <i class="fas fa-cart-plus"></i>
               <p>Pengajuan Sarpras</p>
+            </a>
+          </li>
+          <?php endif; ?>
+          <!-- … menu-role based sebelumnya … -->
+          <li class="nav-item">
+            <a href="<?=base_url('logout')?>" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
             </a>
           </li>
         </ul>

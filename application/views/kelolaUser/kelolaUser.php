@@ -52,7 +52,7 @@
                             <input type="hidden" name="id" value="<?= $us->id ?>">
                             <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                         </form>
-                    <a href="<?= base_url('kelolaUser/hapus_data/' . $us->id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                        <a href="<?= base_url('kelolaUser/hapus_data/' . $us->id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; else: ?>
