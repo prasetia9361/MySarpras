@@ -55,11 +55,19 @@ class Sarprasmodel extends CI_Model
         return $this->db->get();
     }
 
-    public function get_nama_barang()
+    public function get_nama_barang($status)
     {
         $this->db->select('nama_barang');
         $this->db->from('tb_sarpras');
-        $this->db->where('status', 0);
+        $this->db->where('status', $status);
+        return $this->db->get();
+    }
+
+    public function get_nama_barang_kembali()
+    {
+        $this->db->select('nama_barang');
+        $this->db->from('tb_sarpras');
+        $this->db->where('status', 1);
         return $this->db->get();
     }
 

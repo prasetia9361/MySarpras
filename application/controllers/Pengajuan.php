@@ -17,7 +17,8 @@ class Pengajuan extends CI_Controller
     public function index()
     {
         $data['title'] = 'Pengajuan Sarpras';
-        $data['rekap'] = $this->Accmodel->get_pengajuan()->result();
+        $nama = $this->session->userdata('nama');
+        $data['rekap'] = $this->Accmodel->get_pengajuan_by_nama($nama)->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -28,14 +29,22 @@ class Pengajuan extends CI_Controller
     public function tambah()
     {
         $this->load->model('Sarprasmodel');
-        $data['options_barang'] = $this->Sarprasmodel->get_nama_barang()->result();
+        $data['nama_user'] = $this->session->userdata('nama');
 
         $data['title'] = 'Tambah Pengajuan';
+        $data['options_barang'] = []; // biarkan kosong, nanti diisi via AJAX
+
+        // $option = $this->input->post('jenis_pengajuan');
+        // $data['options_barang'] = $this->Sarprasmodel->get_nama_barang($option)->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('pengajuan/tambah', $data);
         $this->load->view('templates/footer');
+
+
+
+
     }
 
     public function simpan()
@@ -89,6 +98,19 @@ class Pengajuan extends CI_Controller
         $data = [];
         foreach ($result as $row) {
             $data[] = $row->id_barang;
+        }
+        echo json_encode($data);
+    }
+
+    public function get_nama_barang_by_status()
+    {
+        $status = $this->input->post('status');
+        $this->load->model('Sarprasmodel');
+        $result = $this->Sarprasmodel->get_nama_barang($status)->result();
+
+        $data = [];
+        foreach ($result as $row) {
+            $data[] = $row->nama_barang;
         }
         echo json_encode($data);
     }

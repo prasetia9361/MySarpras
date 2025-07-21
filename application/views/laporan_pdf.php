@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<img src="<?= base_url('assets/img/logo.png') ?>" class="logo" alt="Logo">
+<img src="<?= base_url('assets/img/icp.png') ?>" class="logo" alt="Logo">
 <div class="watermark">MySarpras</div>
 
 <h2>Laporan Peminjaman</h2>

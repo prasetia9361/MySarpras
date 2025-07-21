@@ -4,8 +4,10 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-    <strong>2024 - sistem Peminjaman Berbasis Web </strong> | design by Khoirul Adha
-  </footer>
+    <div class="text-center">
+        <strong>2024 - sistem Peminjaman Berbasis Web </strong> | design by Khoirul Adha
+    </div>
+</footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
