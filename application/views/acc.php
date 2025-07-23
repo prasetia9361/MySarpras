@@ -37,7 +37,7 @@
                     <td><?= $raw->nama_barang ?></td>
                     <td><?= $raw->tanggal ?></td>
                     <td>
-                        <?= $raw->jenis_pengajuan == 0 ? "Peminjaman" : "Pengembalian"; ?>
+                        <?= $raw->jenis_pengajuan == 0 ? "Peminjaman" : "Pengembalian" ?>
                     </td>
                     <td><?= $raw->keterangan ?></td>
                     <td><?= $status ?></td>
@@ -49,6 +49,7 @@
                             data-id="<?= $raw->id_pengajuan ?>"
                             data-nama="<?= $raw->nama ?>"
                             data-id_barang="<?= $raw->id_barang ?>"
+                            data-jenis_pengajuan="<?= $raw->jenis_pengajuan ?>"
                             data-action="setujui"
                             data-aksi="disetujui"
                             >Disetujui</button>
@@ -59,6 +60,7 @@
                             data-id="<?= $raw->id_pengajuan ?>"
                             data-nama="<?= $raw->nama ?>"
                             data-id_barang="<?= $raw->id_barang ?>"
+                            data-jenis_pengajuan="<?= $raw->jenis_pengajuan ?>"
                             data-action="tolak"
                             data-aksi="Ditolak"
                             >Ditolak</button>
@@ -135,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var id = button.data('id');
         var nama = button.data('nama');
         var id_barang = button.data('id_barang');
+        var jenis_pengajuan = button.data('jenis_pengajuan');
         var action = button.data('action');
         var aksi = button.data('aksi');
 
@@ -147,10 +150,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if(action === "setujui") {
             pesan = "Setujui pengajuan atas nama <b>" + nama + "</b>?";
-            url = "<?= base_url('acc/setujui/') ?>" + id + "/" + id_barang;
+            url = "<?= base_url('acc/setujui/') ?>" + id + "/" + id_barang + "/" + jenis_pengajuan;
         } else if(action === "tolak") {
             pesan = "Tolak pengajuan atas nama <b>" + nama + "</b>?";
-            url = "<?= base_url('acc/tolak/') ?>" + id + "/" + id_barang;
+            url = "<?= base_url('acc/tolak/') ?>" + id + "/" + id_barang + "/" + jenis_pengajuan;
         } else if(action === "hapus") {
             pesan = "Hapus pengajuan ini?";
             url = "<?= base_url('acc/hapus/') ?>" + id + "/" + id_barang;
